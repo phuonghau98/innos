@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS30 Days Drum Kit</title>
+    <style>
+        html{
+            height: 100%;
+        }
+        body{
+            height: 100%;   
+            background-image: url('./background.jpg');
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            margin: 0;
+        }
+        .keys{
+            display: flex;
+            justify-content: center;
+            align-items:center;
+            height: 100vh;
+        }
+        .keycode{
+            color : white;
+            font-size : 3em;
+            margin-top:10px;
+        }
+        .key{
+            width: 100px;
+            height:100px;
+            text-align: center;
+            border : 1px solid white;
+            margin : 20px;
+            box-sizing : border-box;
+            transition: 0.1s ease-out;
+
+        }
+        .affect{
+            color: red;
+        }
+        .playing{
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="keys">
+        <div key-code="65" class="key">
+            <div  class="keycode">A</div>
+            <div class="affect">CLAP</div>
+        </div>
+        <div key-code="83" class="key">
+            <div class="keycode">S</div>
+            <div class="affect">HIHAT</div>
+        </div>
+        <div key-code="68" class="key">
+            <div class="keycode">D</div>
+            <div class="affect">KICK</div>
+        </div>
+        <div key-code="70" class="key">
+            <div class="keycode">F</div>
+            <div class="affect">OPENHAT</div>
+        </div>
+        <div key-code="71" class="key">
+            <div class="keycode">G</div>
+            <div class="affect">BOOM</div>
+        </div>
+        <div key-code="72" class="key">
+            <div class="keycode">H</div>
+            <div class="affect">RIDE</div>
+        </div>
+        <div key-code="74" class="key">
+            <div class="keycode">J</div>
+            <div class="affect">SNARE</div>
+        </div>
+        <div key-code="75" class="key">
+            <div class="keycode">K</div>
+            <div class="affect">TOM</div>
+        </div>
+        <div key-code="76" class="key">
+            <div class="keycode">L</div>
+            <div class="affect">TINK</div>
+        </div>
+    </div>    
+
+</body>
+<audio key-code="65" src="./audio/clap.wav"></audio>
+<audio key-code="83" src="./audio/hihat.wav"></audio>
+<audio key-code="68" src="./audio/kick.wav"></audio>
+<audio key-code="70" src="./audio/openhat.wav"></audio>
+<audio key-code="71" src="./audio/boom.wav"></audio>
+<audio key-code="72" src="./audio/ride.wav"></audio>
+<audio key-code="74" src="./audio/snare.wav"></audio>
+<audio key-code="75" src="./audio/tom.wav"></audio>
+<audio key-code="76" src="./audio/tink.wav"></audio>
+<script>
+    window.addEventListener("keydown", function(e){
+        const element = document.querySelector(`div[key-code="${e.keyCode}"]`);
+        if(!element) return ;
+        const audio = document.querySelector(`audio[key-code="${e.keyCode}"]`)
+        element.classList.add('playing');
+        if(!audio) return;
+        audio.currentTime = 0;
+        audio.play();
+    });
+    const key = document.querySelectorAll('.key');
+    function removetransition(e){
+        if(e.propertyName !== 'transform') return ;
+        this.classList.remove('playing');
+        console.log(e.target.attributes[0]);
+    }
+    key.forEach(key =>{
+        key.addEventListener('transitionend', removetransition);
+    });
+</script>
+
+</html>
